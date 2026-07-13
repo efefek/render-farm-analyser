@@ -1,0 +1,16 @@
+job_id,shot_name,frames,render_time_per_frame_mins,cost_per_hour,artist
+J001,SH010_establishing,240,8.5,0.85,E.Kose
+J002,SH020_explosion,120,42.0,1.40,M.Bankole
+J003,SH030_dialogue_bg,360,2.25,0.55,R.Patel
+J004,SH040_crowd_sim,96,65.5,1.40,M.Bankole
+J005,SH050_cleanup,480,1.75,0.55,A.Nowak
+J006,SH060_water_sim,144,88.0,2.10,M.Bankole
+J007,SH070_matte_paint,72,3.0,0.55,R.Patel
+J008,SH080_car_chase,300,18.75,1.40,E.Kose
+J009,SH090_smoke_fx,180,55.25,2.10,A.Nowak
+J010,SH100_greenscreen,420,4.5,0.85,R.Patel
+J011,SH110_destruction,150,72.0,2.10,M.Bankole
+J012,SH120_lens_flare,60,1.2,0.55,A.Nowak
+J013,SH130_creature,210,38.5,1.40,E.Kose
+J014,SH140_set_extension,330,11.0,0.85,R.Patel
+J015,SH150_final_grade,600,0.75,0.55,A.Nowak

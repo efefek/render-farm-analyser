@@ -1,0 +1,17 @@
+# Python bytecode cache - generated automatically, never worth committing.
+__pycache__/
+*.pyc
+
+# Virtual environments, if one is ever used.
+.venv/
+venv/
+
+# Editor and OS clutter.
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+
+# NOTE: output/results.csv and output/report.txt are deliberately NOT ignored.
+# They are committed so the marker can see a real example of the program's
+# output without having to run it first.

@@ -1,0 +1,37 @@
+==============================================================
+RENDER FARM JOB ANALYSER - PROCESSING REPORT
+==============================================================
+
+RUN DETAILS
+--------------------------------------------------------------
+Generated      : 13 July 2026 at 15:22:10
+Input file     : data/render_jobs.csv
+Results file   : output\results.csv
+
+PROCESSING ACTIVITY
+--------------------------------------------------------------
+Data rows read : 15
+Rows processed : 15
+Rows skipped   : 0
+
+SUMMARY STATISTICS
+--------------------------------------------------------------
+Jobs analysed        : 15
+Total frames         : 3762
+Total render time    : 1140.05 hours
+Total cost           : £1882.79
+Average render time  : 76.0 hours per job
+Average cost         : £125.52 per job
+
+KEY FINDINGS
+--------------------------------------------------------------
+Most expensive shot  : SH060_water_sim (£443.52)
+Slowest shot         : SH060_water_sim (88.0 mins per frame)
+Highest spend artist : M.Bankole (£1085.84)
+
+COST BY ARTIST
+--------------------------------------------------------------
+  M.Bankole    £1085.84
+  A.Nowak      £360.55
+  E.Kose       £348.8
+  R.Patel      £87.6

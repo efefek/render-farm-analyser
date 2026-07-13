@@ -1,0 +1,16 @@
+job_id,shot_name,artist,frames,render_time_per_frame_mins,cost_per_hour,total_render_mins,total_render_hours,total_cost_gbp,cost_per_frame_gbp,efficiency_rating
+J001,SH010_establishing,E.Kose,240,8.5,0.85,2040.0,34.0,28.9,0.1204,Normal
+J002,SH020_explosion,M.Bankole,120,42.0,1.4,5040.0,84.0,117.6,0.98,Slow
+J003,SH030_dialogue_bg,R.Patel,360,2.25,0.55,810.0,13.5,7.43,0.0206,Fast
+J004,SH040_crowd_sim,M.Bankole,96,65.5,1.4,6288.0,104.8,146.72,1.5283,Slow
+J005,SH050_cleanup,A.Nowak,480,1.75,0.55,840.0,14.0,7.7,0.016,Fast
+J006,SH060_water_sim,M.Bankole,144,88.0,2.1,12672.0,211.2,443.52,3.08,Slow
+J007,SH070_matte_paint,R.Patel,72,3.0,0.55,216.0,3.6,1.98,0.0275,Fast
+J008,SH080_car_chase,E.Kose,300,18.75,1.4,5625.0,93.75,131.25,0.4375,Normal
+J009,SH090_smoke_fx,A.Nowak,180,55.25,2.1,9945.0,165.75,348.07,1.9337,Slow
+J010,SH100_greenscreen,R.Patel,420,4.5,0.85,1890.0,31.5,26.77,0.0638,Fast
+J011,SH110_destruction,M.Bankole,150,72.0,2.1,10800.0,180.0,378.0,2.52,Slow
+J012,SH120_lens_flare,A.Nowak,60,1.2,0.55,72.0,1.2,0.66,0.011,Fast
+J013,SH130_creature,E.Kose,210,38.5,1.4,8085.0,134.75,188.65,0.8983,Slow
+J014,SH140_set_extension,R.Patel,330,11.0,0.85,3630.0,60.5,51.42,0.1558,Normal
+J015,SH150_final_grade,A.Nowak,600,0.75,0.55,450.0,7.5,4.12,0.0069,Fast
