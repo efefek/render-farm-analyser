@@ -2,6 +2,10 @@
 __pycache__/
 *.pyc
 
+# PyInstaller working files and generated build specification.
+build/
+*.spec
+
 # Virtual environments, if one is ever used.
 .venv/
 venv/
