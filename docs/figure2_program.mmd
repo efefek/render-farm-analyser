@@ -1,0 +1,30 @@
+flowchart TD
+    A([Program starts]) --> B{Exactly one argument<br/>on the command line?}
+    B -->|No| C[Print usage message] --> D([Exit code 2])
+    B -->|Yes| E[input_path = sys.argv 1]
+
+    E --> F[Open the input file]
+    F --> G{File opened<br/>successfully?}
+    G -->|No| H[Print file error] --> I([Exit code 1])
+
+    G -->|Yes| J[Read the header row]
+    J --> K{Header matches the<br/>6 expected columns?}
+    K -->|No| L[Print column error] --> I
+
+    K -->|Yes| M[/Read the next data row/]
+    M --> N{Any rows left?}
+    N -->|Yes| O{Is the row valid?<br/>field count, numbers,<br/>positive values}
+    O -->|No| P[Add to 'skipped' list<br/>with the reason] --> M
+    O -->|Yes| Q[Add to 'jobs' list] --> M
+
+    N -->|No| R[For each valid job, calculate:<br/>total render time<br/>total render hours<br/>total cost<br/>cost per frame<br/>efficiency rating]
+
+    R --> S{Any valid jobs<br/>at all?}
+    S -->|Yes| T[Calculate summary statistics:<br/>total cost, averages,<br/>most expensive shot,<br/>cost per artist]
+    S -->|No| U[summary = None<br/>avoids dividing by zero]
+
+    T --> V[Write output/results.csv]
+    U --> V
+    V --> W[Write output/report.txt<br/>including every skipped row<br/>and its reason]
+    W --> X[Print a summary to the screen]
+    X --> Y([Exit code 0])

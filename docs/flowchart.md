@@ -28,6 +28,8 @@ flowchart TD
     J -->|Yes| M[Print 'Done - see output folder'] --> L
 ```
 
+Exported PNG: `figure1_launcher.png`
+
 ---
 
 ## Figure 2 - The Python program (render_analyser.py)
@@ -65,6 +67,8 @@ flowchart TD
     X --> Y([Exit code 0])
 ```
 
+Exported PNG: `figure2_program.png`
+
 ---
 
 ## Figure 3 - Row validation, in detail
@@ -98,6 +102,8 @@ flowchart TD
     T --> W
     U --> W
 ```
+
+Exported PNG: `figure3_validation.png`
 
 ---
 

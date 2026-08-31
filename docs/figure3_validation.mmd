@@ -1,0 +1,23 @@
+flowchart TD
+    A([One raw row of text]) --> B{Does it have exactly<br/>6 fields?}
+    B -->|No| R[REJECT:<br/>'expected 6 fields but found N']
+
+    B -->|Yes| C{Are job_id, shot_name<br/>and artist all non-empty?}
+    C -->|No| S[REJECT:<br/>'field is empty']
+
+    C -->|Yes| D[For each numeric field:<br/>frames, time per frame, cost per hour]
+    D --> E{Is the text empty?}
+    E -->|Yes| S
+
+    E -->|No| F{Can the text be<br/>converted to a number?}
+    F -->|No| T[REJECT:<br/>'not a valid number, got twelve']
+
+    F -->|Yes| G{Is the number<br/>greater than zero?}
+    G -->|No| U[REJECT:<br/>'must be greater than zero'<br/>this is what stops a<br/>divide-by-zero later]
+
+    G -->|Yes| V([ACCEPT:<br/>return the job as a dictionary])
+
+    R --> W([Record the reason,<br/>skip the row,<br/>carry on with the next one])
+    S --> W
+    T --> W
+    U --> W

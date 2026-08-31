@@ -1,0 +1,12 @@
+flowchart TD
+    A([Script starts]) --> B[Change to the script's own folder]
+    B --> C{Did the user supply<br/>a file name?}
+    C -->|Yes| D[Use the supplied file]
+    C -->|No| E[Use the default:<br/>data/render_jobs.csv]
+    D --> F{Does that file<br/>exist?}
+    E --> F
+    F -->|No| G[Print error message] --> H([Exit with code 1])
+    F -->|Yes| I[Run: python render_analyser.py FILE]
+    I --> J{Exit code = 0?}
+    J -->|No| K[Report the problem] --> L([End])
+    J -->|Yes| M[Print 'Done - see output folder'] --> L
