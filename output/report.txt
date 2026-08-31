@@ -4,9 +4,9 @@ RENDER FARM JOB ANALYSER - PROCESSING REPORT
 
 RUN DETAILS
 --------------------------------------------------------------
-Generated      : 13 July 2026 at 15:22:10
-Input file     : data/render_jobs.csv
-Results file   : output\results.csv
+Generated      : 31 August 2026 at 23:46:47
+Input file     : data\render_jobs.csv
+Results file   : C:\Users\kosee\Projects\render-farm-analyser\output\results.csv
 
 PROCESSING ACTIVITY
 --------------------------------------------------------------

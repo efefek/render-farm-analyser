@@ -1,0 +1,48 @@
+==============================================================
+RENDER FARM JOB ANALYSER - PROCESSING REPORT
+==============================================================
+
+RUN DETAILS
+--------------------------------------------------------------
+Generated      : 31 August 2026 at 23:46:00
+Input file     : data\bad_data.csv
+Results file   : C:\Users\kosee\Projects\render-farm-analyser\output\results.csv
+
+PROCESSING ACTIVITY
+--------------------------------------------------------------
+Data rows read : 13
+Rows processed : 3
+Rows skipped   : 10
+
+SKIPPED ROWS (line number - reason)
+--------------------------------------------------------------
+  Line   3 : 'frames' is not a valid number (got 'twelve')
+  Line   4 : 'frames' must be greater than zero (got 0)
+  Line   5 : 'render_time_per_frame_mins' must be greater than zero (got -5.0)
+  Line   6 : 'cost_per_hour' is empty
+  Line   7 : expected 6 fields but found 4
+  Line   8 : 'frames' is empty
+  Line   9 : blank line
+  Line  11 : 'frames' must be greater than zero (got -60)
+  Line  12 : 'cost_per_hour' is not a valid number (got 'free')
+  Line  13 : expected 6 fields but found 7
+
+SUMMARY STATISTICS
+--------------------------------------------------------------
+Jobs analysed        : 3
+Total frames         : 510
+Total render time    : 100.0 hours
+Total cost           : £142.3
+Average render time  : 33.33 hours per job
+Average cost         : £47.43 per job
+
+KEY FINDINGS
+--------------------------------------------------------------
+Most expensive shot  : SH310_last_valid (£63.0)
+Slowest shot         : SH310_last_valid (20.0 mins per frame)
+Highest spend artist : E.Kose (£79.3)
+
+COST BY ARTIST
+--------------------------------------------------------------
+  E.Kose       £79.3
+  R.Patel      £63.0
