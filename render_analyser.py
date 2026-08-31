@@ -54,7 +54,9 @@ MINUTES_PER_HOUR = 60          # Used to convert render minutes into billable ho
 FAST_THRESHOLD_MINS = 5.0      # Under 5 min/frame is considered a light render.
 SLOW_THRESHOLD_MINS = 30.0     # Over 30 min/frame is a heavy render worth flagging.
 
-OUTPUT_DIR = "output"                              # All generated files live here.
+# Keep generated files beside the directory the user launched from. A frozen
+# build must not write into PyInstaller's temporary sys._MEIPASS folder.
+OUTPUT_DIR = os.path.join(os.getcwd(), "output")
 RESULTS_FILE = os.path.join(OUTPUT_DIR, "results.csv")
 REPORT_FILE = os.path.join(OUTPUT_DIR, "report.txt")
 
