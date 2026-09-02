@@ -1,0 +1,39 @@
+==============================================================
+RENDER FARM JOB ANALYSER - PROCESSING REPORT
+==============================================================
+
+RUN DETAILS
+--------------------------------------------------------------
+Generated      : 02 September 2026 at 14:40:29
+Input file     : C:\Users\kosee\AppData\Local\Temp\_MEI000088242\data\project3_kestrel.csv
+Results file   : C:\Users\kosee\Projects\render-farm-analyser\output\project3_kestrel_results.csv
+
+PROCESSING ACTIVITY
+--------------------------------------------------------------
+Data rows read : 20
+Rows processed : 20
+Rows skipped   : 0
+
+SUMMARY STATISTICS
+--------------------------------------------------------------
+Jobs analysed        : 20
+Total frames         : 3045
+Total render time    : 528.82 hours
+Total cost           : £784.3
+Average render time  : 26.44 hours per job
+Average cost         : £39.21 per job
+
+KEY FINDINGS
+--------------------------------------------------------------
+Most expensive shot  : SH080_alley_pursuit (£81.31)
+Slowest shot         : SH180_power_surge (18.6 mins per frame)
+Highest spend artist : J.Clarke (£244.23)
+
+COST BY ARTIST
+--------------------------------------------------------------
+  J.Clarke     £244.23
+  R.Patel      £182.96
+  S.Okafor     £151.85
+  M.Chen       £88.86
+  A.Nowak      £76.07
+  P.Singh      £40.33

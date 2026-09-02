@@ -1,0 +1,40 @@
+==============================================================
+RENDER FARM JOB ANALYSER - PROCESSING REPORT
+==============================================================
+
+RUN DETAILS
+--------------------------------------------------------------
+Generated      : 02 September 2026 at 14:40:28
+Input file     : C:\Users\kosee\AppData\Local\Temp\_MEI0000b4182\data\project2_northbridge.csv
+Results file   : C:\Users\kosee\Projects\render-farm-analyser\output\project2_northbridge_results.csv
+
+PROCESSING ACTIVITY
+--------------------------------------------------------------
+Data rows read : 18
+Rows processed : 18
+Rows skipped   : 0
+
+SUMMARY STATISTICS
+--------------------------------------------------------------
+Jobs analysed        : 18
+Total frames         : 7224
+Total render time    : 7786.39 hours
+Total cost           : £33757.63
+Average render time  : 432.58 hours per job
+Average cost         : £1875.42 per job
+
+KEY FINDINGS
+--------------------------------------------------------------
+Most expensive shot  : SH030_river_flood_sim (£11115.0)
+Slowest shot         : SH030_river_flood_sim (142.5 mins per frame)
+Highest spend artist : I.Santos (£16827.9)
+
+COST BY ARTIST
+--------------------------------------------------------------
+  I.Santos     £16827.9
+  M.Bankole    £12632.0
+  R.Patel      £1408.68
+  N.Williams   £1281.44
+  E.Kose       £831.57
+  S.Okafor     £636.86
+  A.Nowak      £139.18

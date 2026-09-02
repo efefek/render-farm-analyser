@@ -1,0 +1,38 @@
+==============================================================
+RENDER FARM JOB ANALYSER - PROCESSING REPORT
+==============================================================
+
+RUN DETAILS
+--------------------------------------------------------------
+Generated      : 02 September 2026 at 14:37:56
+Input file     : data\project1_lighthouse.csv
+Results file   : C:\Users\kosee\Projects\render-farm-analyser\output\project1_lighthouse_results.csv
+
+PROCESSING ACTIVITY
+--------------------------------------------------------------
+Data rows read : 16
+Rows processed : 16
+Rows skipped   : 0
+
+SUMMARY STATISTICS
+--------------------------------------------------------------
+Jobs analysed        : 16
+Total frames         : 1441
+Total render time    : 120.03 hours
+Total cost           : £69.97
+Average render time  : 7.5 hours per job
+Average cost         : £4.37 per job
+
+KEY FINDINGS
+--------------------------------------------------------------
+Most expensive shot  : SH030_product_turntable (£8.93)
+Slowest shot         : SH080_steam_pass (11.6 mins per frame)
+Highest spend artist : M.Chen (£21.35)
+
+COST BY ARTIST
+--------------------------------------------------------------
+  M.Chen       £21.35
+  E.Kose       £18.98
+  A.Nowak      £13.0
+  S.Okafor     £11.25
+  L.Hughes     £5.39

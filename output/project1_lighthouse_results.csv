@@ -1,0 +1,17 @@
+job_id,shot_name,artist,frames,render_time_per_frame_mins,cost_per_hour,total_render_mins,total_render_hours,total_cost_gbp,cost_per_frame_gbp,efficiency_rating
+LH001,SH010_packshot_open,L.Hughes,72,2.4,0.48,172.8,2.88,1.38,0.0192,Fast
+LH002,SH020_kitchen_wide,E.Kose,96,5.8,0.55,556.8,9.28,5.1,0.0532,Normal
+LH003,SH030_product_turntable,A.Nowak,120,7.2,0.62,864.0,14.4,8.93,0.0744,Normal
+LH004,SH040_coffee_pour,M.Chen,64,9.5,0.68,608.0,10.13,6.89,0.1077,Normal
+LH005,SH050_logo_reveal,L.Hughes,48,3.1,0.45,148.8,2.48,1.12,0.0233,Fast
+LH006,SH060_tabletop_macro,E.Kose,84,6.4,0.58,537.6,8.96,5.2,0.0619,Normal
+LH007,SH070_window_cleanup,A.Nowak,140,1.8,0.45,252.0,4.2,1.89,0.0135,Fast
+LH008,SH080_steam_pass,M.Chen,55,11.6,0.72,638.0,10.63,7.66,0.1392,Normal
+LH009,SH090_hand_comp,S.Okafor,110,4.3,0.52,473.0,7.88,4.1,0.0373,Fast
+LH010,SH100_bottle_beauty,E.Kose,90,8.1,0.64,729.0,12.15,7.78,0.0864,Normal
+LH011,SH110_label_cleanup,A.Nowak,132,2.2,0.45,290.4,4.84,2.18,0.0165,Fast
+LH012,SH120_countertop_glint,L.Hughes,60,3.7,0.5,222.0,3.7,1.85,0.0308,Fast
+LH013,SH130_family_wide,S.Okafor,150,5.2,0.55,780.0,13.0,7.15,0.0477,Normal
+LH014,SH140_endboard,E.Kose,75,1.6,0.45,120.0,2.0,0.9,0.012,Fast
+LH015,SH150_social_crop,L.Hughes,45,2.9,0.48,130.5,2.17,1.04,0.0232,Fast
+LH016,SH160_final_packshot,M.Chen,100,6.8,0.6,680.0,11.33,6.8,0.068,Normal

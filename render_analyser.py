@@ -17,13 +17,17 @@ statistics so that decision can be made from data.
 USAGE:
     python render_analyser.py <input_csv_file>
 
+If no input file is supplied, an interactive menu offers the bundled sample
+projects. The command line argument remains the primary interface because the
+assessment requires the input path to be supplied that way.
+
 EXAMPLE:
     python render_analyser.py data/render_jobs.csv
 
 EXIT CODES (so that the calling .bat / .sh script can react to failure):
     0 = success
     1 = a fatal error occurred (e.g. input file could not be read)
-    2 = the program was called incorrectly (wrong number of arguments)
+    2 = the program was called with too many arguments
 """
 
 import csv
@@ -57,8 +61,15 @@ SLOW_THRESHOLD_MINS = 30.0     # Over 30 min/frame is a heavy render worth flagg
 # Keep generated files beside the directory the user launched from. A frozen
 # build must not write into PyInstaller's temporary sys._MEIPASS folder.
 OUTPUT_DIR = os.path.join(os.getcwd(), "output")
-RESULTS_FILE = os.path.join(OUTPUT_DIR, "results.csv")
-REPORT_FILE = os.path.join(OUTPUT_DIR, "report.txt")
+
+# The menu files are named here once so the displayed choices and their paths
+# cannot drift apart. Their descriptions explain the deliberately different
+# production profiles represented by the three sample data sets.
+PROJECTS = {
+    "1": ("Lighthouse", "commercial", "project1_lighthouse.csv"),
+    "2": ("Northbridge", "feature film", "project2_northbridge.csv"),
+    "3": ("Kestrel", "episodic TV", "project3_kestrel.csv"),
+}
 
 
 # ---------------------------------------------------------------------------
@@ -83,6 +94,60 @@ def parse_arguments(argv):
         sys.exit(2)  # Exit code 2 = usage error, so scripts can tell it apart.
 
     return argv[1]
+
+
+def get_program_directory():
+    """Return the folder containing the script or its packaged resources.
+
+    PyInstaller extracts bundled data into sys._MEIPASS while the executable is
+    running. Using that location means the project menu works in the packaged
+    build as well as when this source file is run directly from the repository.
+    """
+    if getattr(sys, "frozen", False):
+        return sys._MEIPASS
+
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+def choose_input_file():
+    """Ask the user to choose a sample project or enter another CSV path.
+
+    This menu is only a fallback when no command line path was supplied. The
+    command line remains the primary interface because passing the input path as
+    an argument is a requirement of the assessment brief and supports scripts.
+    """
+    while True:
+        print("Render Farm Job Analyser - Project Selection")
+        print("-" * 48)
+        for choice, (name, description, _filename) in PROJECTS.items():
+            print(f"  {choice}) {name:<12} - {description}")
+        print("  4) Enter a different CSV file path manually")
+        print("  0) Quit")
+
+        try:
+            choice = input("Choose a project: ").strip()
+
+            if choice in PROJECTS:
+                filename = PROJECTS[choice][2]
+                return os.path.join(get_program_directory(), "data", filename)
+
+            if choice == "4":
+                manual_path = input("Enter CSV file path: ").strip()
+                if os.path.isfile(manual_path):
+                    return manual_path
+                print(f"File not found: '{manual_path}'. Please try again.\n")
+                continue
+
+            if choice == "0":
+                print("Exiting without running an analysis.")
+                return None
+
+            print("Invalid choice. Enter 0, 1, 2, 3 or 4.\n")
+        except (KeyboardInterrupt, EOFError):
+            # Ctrl+C and Ctrl+Z/EOF are normal ways to leave an interactive
+            # console, so they should not produce a traceback or error status.
+            print("\nSelection cancelled. Exiting.")
+            return None
 
 
 # ---------------------------------------------------------------------------
@@ -346,7 +411,34 @@ def ensure_output_dir():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
-def write_results_csv(results):
+def get_output_paths(input_path):
+    """Return output names which preserve the two original demonstrations.
+
+    The original sample and error-handling files keep their established names
+    for assessment compatibility. Other inputs use their stem so the three
+    project reports can exist together instead of overwriting one another.
+    """
+    input_stem = os.path.splitext(os.path.basename(input_path))[0]
+
+    if input_stem == "render_jobs":
+        return (
+            os.path.join(OUTPUT_DIR, "results.csv"),
+            os.path.join(OUTPUT_DIR, "report.txt"),
+        )
+
+    if input_stem == "bad_data":
+        return (
+            os.path.join(OUTPUT_DIR, "results.csv"),
+            os.path.join(OUTPUT_DIR, "report_bad_data.txt"),
+        )
+
+    return (
+        os.path.join(OUTPUT_DIR, f"{input_stem}_results.csv"),
+        os.path.join(OUTPUT_DIR, f"{input_stem}_report.txt"),
+    )
+
+
+def write_results_csv(results, results_file):
     """Write one row per processed job, with the original data plus every metric.
 
     We keep the source columns alongside the calculated ones so the output file
@@ -360,7 +452,7 @@ def write_results_csv(results):
         "total_cost_gbp", "cost_per_frame_gbp", "efficiency_rating",
     ]
 
-    with open(RESULTS_FILE, "w", newline="", encoding="utf-8") as csv_file:
+    with open(results_file, "w", newline="", encoding="utf-8") as csv_file:
         # DictWriter maps dictionary keys onto columns, so the header and the
         # rows can never drift out of order.
         writer = csv.DictWriter(csv_file, fieldnames=columns, extrasaction="ignore")
@@ -369,7 +461,8 @@ def write_results_csv(results):
             writer.writerow(job)
 
 
-def write_report(input_path, rows_read, results, skipped, summary):
+def write_report(input_path, results_file, report_file, rows_read, results,
+                 skipped, summary):
     """Write the human-readable summary report describing the processing run.
 
     This file exists to answer the question "can I trust these numbers?" - it
@@ -377,7 +470,7 @@ def write_report(input_path, rows_read, results, skipped, summary):
     """
     timestamp = datetime.now().strftime("%d %B %Y at %H:%M:%S")
 
-    with open(REPORT_FILE, "w", encoding="utf-8") as report:
+    with open(report_file, "w", encoding="utf-8") as report:
         report.write("=" * 62 + "\n")
         report.write("RENDER FARM JOB ANALYSER - PROCESSING REPORT\n")
         report.write("=" * 62 + "\n\n")
@@ -386,7 +479,7 @@ def write_report(input_path, rows_read, results, skipped, summary):
         report.write("-" * 62 + "\n")
         report.write(f"Generated      : {timestamp}\n")
         report.write(f"Input file     : {input_path}\n")
-        report.write(f"Results file   : {RESULTS_FILE}\n\n")
+        report.write(f"Results file   : {results_file}\n\n")
 
         report.write("PROCESSING ACTIVITY\n")
         report.write("-" * 62 + "\n")
@@ -439,18 +532,15 @@ def write_report(input_path, rows_read, results, skipped, summary):
 
 
 # ---------------------------------------------------------------------------
-# 5. MAIN - THE SEQUENCE THAT TIES EVERYTHING TOGETHER
+# 5. ANALYSIS AND MAIN - THE SEQUENCE THAT TIES EVERYTHING TOGETHER
 # ---------------------------------------------------------------------------
 
-def main():
-    """Run the analysis from start to finish.
+def analyse_file(input_path):
+    """Analyse one input file from either supported entry point.
 
-    Reads as a plain list of steps: get the argument, read the file, calculate,
-    write the outputs, report to the screen. All the detail lives in the
-    functions above, so the overall shape of the program is visible at a glance.
+    Keeping all processing here ensures a menu choice and a command line path
+    run exactly the same validation, calculations and report-writing logic.
     """
-    input_path = parse_arguments(sys.argv)
-
     print("Render Farm Job Analyser")
     print("-" * 40)
     print(f"Reading: {input_path}")
@@ -484,8 +574,10 @@ def main():
     summary = summarise(results)
 
     ensure_output_dir()
-    write_results_csv(results)
-    write_report(input_path, rows_read, results, skipped, summary)
+    results_file, report_file = get_output_paths(input_path)
+    write_results_csv(results, results_file)
+    write_report(input_path, results_file, report_file, rows_read, results,
+                 skipped, summary)
 
     # Print a short confirmation so the user knows what happened without having
     # to open the files.
@@ -501,8 +593,26 @@ def main():
         print("WARNING: no valid jobs found - see the report for the reasons.")
 
     print("-" * 40)
-    print(f"Written: {RESULTS_FILE}")
-    print(f"Written: {REPORT_FILE}")
+    print(f"Written: {results_file}")
+    print(f"Written: {report_file}")
+
+
+def main():
+    """Choose an input path, then run the shared analysis sequence.
+
+    A supplied command line path is checked first and remains the primary code
+    path required by the assessment. Only the no-argument case falls back to the
+    interactive project menu; too many arguments still produce the established
+    usage error from parse_arguments().
+    """
+    if len(sys.argv) == 1:
+        input_path = choose_input_file()
+        if input_path is None:
+            return
+    else:
+        input_path = parse_arguments(sys.argv)
+
+    analyse_file(input_path)
 
 
 # This guard means the code above only runs when the file is executed directly
