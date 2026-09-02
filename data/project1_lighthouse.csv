@@ -1,0 +1,17 @@
+job_id,shot_name,frames,render_time_per_frame_mins,cost_per_hour,artist
+LH001,SH010_packshot_open,72,2.4,0.48,L.Hughes
+LH002,SH020_kitchen_wide,96,5.8,0.55,E.Kose
+LH003,SH030_product_turntable,120,7.2,0.62,A.Nowak
+LH004,SH040_coffee_pour,64,9.5,0.68,M.Chen
+LH005,SH050_logo_reveal,48,3.1,0.45,L.Hughes
+LH006,SH060_tabletop_macro,84,6.4,0.58,E.Kose
+LH007,SH070_window_cleanup,140,1.8,0.45,A.Nowak
+LH008,SH080_steam_pass,55,11.6,0.72,M.Chen
+LH009,SH090_hand_comp,110,4.3,0.52,S.Okafor
+LH010,SH100_bottle_beauty,90,8.1,0.64,E.Kose
+LH011,SH110_label_cleanup,132,2.2,0.45,A.Nowak
+LH012,SH120_countertop_glint,60,3.7,0.50,L.Hughes
+LH013,SH130_family_wide,150,5.2,0.55,S.Okafor
+LH014,SH140_endboard,75,1.6,0.45,E.Kose
+LH015,SH150_social_crop,45,2.9,0.48,L.Hughes
+LH016,SH160_final_packshot,100,6.8,0.60,M.Chen
