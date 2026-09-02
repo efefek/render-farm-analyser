@@ -2,7 +2,8 @@
 
 A command line data processing program that reads a CSV of VFX render farm jobs,
 calculates cost and performance metrics for each job, and writes the results to
-an output file along with a summary report.
+an output file along with a summary report. It also provides an interactive
+project menu when it is launched without a file argument.
 
 **Module:** CPUF001 Software Foundation — Assessment 1, Development Project
 **Author:** Efe Kose
@@ -31,6 +32,13 @@ run.bat                      REM analyses the default file, data\render_jobs.csv
 run.bat data\bad_data.csv    REM analyses a file of your choosing
 ```
 
+The packaged Windows executable can use either interface:
+
+```
+dist\render-farm-analyser.exe data\render_jobs.csv
+dist\render-farm-analyser.exe                         REM opens the project menu
+```
+
 ### macOS / Linux
 
 ```
@@ -41,12 +49,37 @@ chmod +x run.sh              # only needed once
 
 ### Running the Python program directly
 
-The data file is passed in as a command line argument. It is never hardcoded, so
-the same program works with any correctly formatted CSV:
+The **primary interface** passes the data file as a command line argument. This
+behaviour is required by the assessment brief and remains the normal way to run
+the program, so it works with any correctly formatted CSV without showing a
+menu:
 
 ```
 python render_analyser.py data/render_jobs.csv
 ```
+
+When no argument is supplied, the fallback interactive menu offers the three
+sample projects, a manual CSV path option and a clean quit option:
+
+```
+python render_analyser.py
+```
+
+Invalid or empty choices are rejected and re-prompted. `Ctrl+C` and end-of-file
+input exit cleanly without a traceback.
+
+---
+
+## Sample projects
+
+All three files use the same six-column input format, but represent different
+production patterns so their reports tell meaningfully different stories:
+
+| Menu | Project | File | Production profile |
+|---|---|---|---|
+| 1 | Lighthouse | `data/project1_lighthouse.csv` | A healthy small commercial: short shots, inexpensive nodes and no extreme cost outlier |
+| 2 | Northbridge | `data/project2_northbridge.csv` | A simulation-heavy feature film where bridge and flood shots dominate the budget |
+| 3 | Kestrel | `data/project3_kestrel.csv` | Episodic TV with many modest jobs spread across a larger artist team |
 
 ---
 
@@ -63,7 +96,7 @@ The program reads **six values** from each row of the input CSV:
 | `cost_per_hour` | decimal | `1.40` | Farm rate in GBP per hour |
 | `artist` | text | `E.Kose` | Artist the shot is assigned to |
 
-Sample data is provided in `data/render_jobs.csv` (15 jobs).
+The original sample data remains available in `data/render_jobs.csv` (15 jobs).
 
 ---
 
@@ -89,14 +122,22 @@ artist · highest-spending artist.
 
 ## Output files
 
-Both are created in the `output/` folder, which the program creates if it does
-not already exist.
+Output files are created in the `output/` folder, which the program creates if
+it does not already exist.
 
 - **`output/results.csv`** — one row per job: the original data plus every
   calculated metric. Opens directly in Excel.
 - **`output/report.txt`** — a human-readable report describing the processing
   run: timestamp, input file, rows read, rows processed, **every skipped row with
   the reason it was rejected**, and the summary statistics.
+
+The original `render_jobs.csv` names remain `results.csv` and `report.txt`, and
+`bad_data.csv` continues to write `results.csv` and `report_bad_data.txt`.
+Other inputs are named from the source file stem, allowing all three project
+reports to remain side by side, for example:
+
+- `output/project2_northbridge_results.csv`
+- `output/project2_northbridge_report.txt`
 
 ---
 
@@ -108,7 +149,10 @@ the analysis.
 
 | Situation | What happens |
 |---|---|
-| No file given on the command line | Usage message printed, exits with code **2** |
+| No file given on the command line | Interactive project-selection menu opens |
+| Invalid or empty menu choice | Clear message and another prompt |
+| `Ctrl+C`, `Ctrl+Z` or EOF in the menu | Short cancellation message, exits with code **0** |
+| Too many command line arguments | Usage message printed, exits with code **2** |
 | File does not exist | Clear error message, exits with code **1** |
 | File has the wrong columns | Reports expected vs. found columns, exits with code **1** |
 | File is not readable text | Reports that the file is not a CSV, exits with code **1** |
@@ -143,10 +187,14 @@ render-farm-analyser/
 ├── run.sh                 macOS / Linux launcher script
 ├── data/
 │   ├── render_jobs.csv    Sample data — 15 valid render jobs
-│   └── bad_data.csv       Deliberately broken data, for testing error handling
+│   ├── bad_data.csv       Deliberately broken data, for testing error handling
+│   ├── project1_lighthouse.csv   Healthy commercial — 16 valid jobs
+│   ├── project2_northbridge.csv  Simulation-heavy feature — 18 valid jobs
+│   └── project3_kestrel.csv      Episodic TV — 20 valid jobs
 ├── output/
 │   ├── results.csv        Generated: per-job calculations
-│   └── report.txt         Generated: processing report and summary statistics
+│   ├── report.txt         Generated: original sample summary report
+│   └── project*_*.{csv,txt}      Generated: separate project outputs
 ├── docs/
 │   └── flowchart.md       Flowcharts and pseudocode for the Development Document
 └── README.md
@@ -160,12 +208,14 @@ The program is organised into five sections, each with a single responsibility.
 `main()` reads as a plain list of steps, so the shape of the whole program is
 visible at a glance while the detail lives in the functions below it.
 
-1. **Command line handling** — `parse_arguments()` reads the file path from
-   `sys.argv` and checks the argument count before using it.
+1. **Input selection** — `parse_arguments()` keeps the required command line
+   path as the primary route; `choose_input_file()` is the no-argument fallback.
 2. **Reading and validating** — `read_jobs()`, `validate_header()`, `parse_row()`
    and `to_positive_number()` turn raw text into trustworthy numbers, returning
    both the valid jobs *and* the rejected rows with their reasons.
 3. **Calculations** — `calculate_metrics()` and `rate_efficiency()` work out the
    per-job figures; `summarise()` produces the studio-wide statistics.
-4. **Writing output** — `write_results_csv()` and `write_report()`.
-5. **`main()`** — the sequence that ties it all together.
+4. **Writing output** — `get_output_paths()`, `write_results_csv()` and
+   `write_report()` preserve legacy names and create per-project names.
+5. **Analysis and entry point** — `analyse_file()` is shared by both interfaces;
+   `main()` decides which input-selection route supplies its path.
